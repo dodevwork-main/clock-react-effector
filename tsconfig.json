@@ -3,12 +3,15 @@
     "target": "ESNext",
     "useDefineForClassFields": true,
     "lib": [
-      "ESNext",
       "DOM",
-      "DOM.Iterable"
+      "DOM.Iterable",
+      "ESNext"
     ],
     "module": "ESNext",
     "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
     /* Bundler mode */
     "moduleResolution": "Node",
     "resolveJsonModule": true,
@@ -22,13 +25,27 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "~/app": ["src/app"],
-      "~/processes/*": ["src/processes/*"],
-      "~/pages": ["src/pages"],
-      "~/widgets/*": ["src/widgets/*"],
-      "~/features/*": ["src/features/*"],
-      "~/entities/*": ["src/entities/*"],
-      "~/shared/*": ["src/shared/*"]
+      "~/app": [
+        "src/app"
+      ],
+      "~/processes/*": [
+        "src/processes/*"
+      ],
+      "~/pages": [
+        "src/pages"
+      ],
+      "~/widgets/*": [
+        "src/widgets/*"
+      ],
+      "~/features/*": [
+        "src/features/*"
+      ],
+      "~/entities/*": [
+        "src/entities/*"
+      ],
+      "~/shared/*": [
+        "src/shared/*"
+      ]
     }
   },
   "include": [
