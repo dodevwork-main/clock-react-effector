@@ -1,4 +1,4 @@
-# <a href="https://clock-react-effector.vercel.app/">Clock React Effector</a>
+# Clock React Effector
 
 - React
 - Effector
