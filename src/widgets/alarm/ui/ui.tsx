@@ -8,11 +8,9 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
 import { useGate } from 'effector-react'
 
 import { getUnixFromNow } from '~/shared/lib/getUnixFromNow'
-import { notificationsModel } from '~/shared/lib/notifications'
 import { getTimeFromToday } from '~/shared/lib/getTimeFromToday'
-import { TIME_FORMAT_MAIN } from '~/shared/config/constants'
 
-import { alarmSwitched, Gate, modalOpened, useAlarmList } from '../model'
+import { alarmDone, Gate, modalOpened, useAlarmList } from '../model'
 
 import { Item } from './Item'
 import { Set } from './Set'
@@ -35,14 +33,7 @@ export function Alarm() {
         const unixFromNow = getUnixFromNow(timeFromToday)
 
         if (unixFromNow > 0) {
-          const timeout = setTimeout(() => {
-            notificationsModel.snackbarEnqueued({
-              message: `Alarm - ${alarm.time.format(TIME_FORMAT_MAIN)}`,
-              variant: 'info',
-            })
-
-            alarmSwitched(alarm)
-          }, unixFromNow * 1000)
+          const timeout = setTimeout(() => alarmDone(alarm), unixFromNow * 1000)
 
           timeoutList.push(timeout)
         }
