@@ -1,15 +1,23 @@
 import { createDomain, sample } from 'effector'
 import { Dayjs } from 'dayjs'
 
-import { timeClockModel } from '~/features/time/clock'
 import { notificationsModel } from '~/shared/lib/notifications'
 import { TIME_FORMAT_CLOCK } from '~/shared/config/constants'
 import { zeroTime } from '~/shared/lib/zeroTime'
-
-const { $time, statusNewSet, statusInProgressSet } = timeClockModel
+import { createClock } from '~/shared/lib/factories'
 
 const domain = createDomain('widgets.timer')
-/* Set Timer */
+
+export const {
+  $time,
+  statusNewSet,
+  statusInProgressSet,
+  statusStoppedSet,
+  useStatus,
+  useTime,
+} = createClock(domain)
+
+/* Set Time */
 export const timeSet = domain.createEvent<Dayjs>()
 const $startTime = domain
   .createStore<Dayjs | null>(null)
