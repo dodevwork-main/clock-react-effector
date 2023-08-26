@@ -1,9 +1,11 @@
-import { createDomain } from 'effector'
+import { createDomain, sample } from 'effector'
 import { createGate, useUnit } from 'effector-react'
 
 import { Alarm, alarmModel } from '~/entities/alarm'
 import { createModal } from '~/shared/lib/factories'
 import { getTimeFromToday } from '~/shared/lib/getTimeFromToday'
+import { notificationsModel } from '~/shared/lib/notifications'
+import { TIME_FORMAT_MAIN } from '~/shared/config/constants'
 
 const { isSameTwoAlarmsFromToday } = alarmModel
 
@@ -49,6 +51,20 @@ const $alarmList = domain
       return item
     }),
   )
+
+export const alarmDone = domain.createEvent<Alarm>()
+sample({
+  clock: alarmDone,
+  fn: (alarm) => ({
+    message: `Alarm - ${alarm.time.format(TIME_FORMAT_MAIN)}`,
+    variant: 'info' as const,
+  }),
+  target: notificationsModel.snackbarEnqueued,
+})
+sample({
+  clock: alarmDone,
+  target: alarmSwitched,
+})
 
 export const { $modal, useModal, modalOpened } = createModal(domain)
 $modal.reset([Gate.close, alarmSet])
