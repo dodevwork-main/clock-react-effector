@@ -4,38 +4,45 @@ import StopCircleIcon from '@mui/icons-material/StopCircle'
 import PlayCircleIcon from '@mui/icons-material/PlayCircle'
 import PauseCircleIcon from '@mui/icons-material/PauseCircle'
 
-import {
-  TimeClock,
-  timeClockModel,
-  TimeClockStatusEnum,
-} from '~/features/time/clock'
+import { Clock } from '~/shared/ui/Clock'
+import { ClockStatusEnum } from '~/shared/config/constants'
 
-import { oneSecondSubtracted } from '../model'
+import {
+  oneSecondSubtracted,
+  statusInProgressSet,
+  statusNewSet,
+  statusStoppedSet,
+  useStatus,
+  useTime,
+} from '../model'
 
 export function Time() {
-  const { statusNewSet, statusInProgressSet, statusStoppedSet, useStatus } =
-    timeClockModel
   const status = useStatus()
+  const time = useTime()
 
   return (
     <Stack justifyContent='center' alignItems='center'>
-      <TimeClock oneSecondHandler={oneSecondSubtracted} />
+      <Clock
+        status={status}
+        time={time}
+        oneSecondHandler={oneSecondSubtracted}
+      />
 
       <Stack justifyContent='center' alignItems='center' direction='row'>
-        {(status === TimeClockStatusEnum.InProgress ||
-          status === TimeClockStatusEnum.Stopped) && (
+        {(status === ClockStatusEnum.InProgress ||
+          status === ClockStatusEnum.Stopped) && (
           <IconButton onClick={() => statusNewSet()}>
             <StopCircleIcon fontSize='large' />
           </IconButton>
         )}
 
-        {status === TimeClockStatusEnum.Stopped && (
+        {status === ClockStatusEnum.Stopped && (
           <IconButton onClick={() => statusInProgressSet()}>
             <PlayCircleIcon fontSize='large' />
           </IconButton>
         )}
 
-        {status === TimeClockStatusEnum.InProgress && (
+        {status === ClockStatusEnum.InProgress && (
           <IconButton onClick={() => statusStoppedSet()}>
             <PauseCircleIcon fontSize='large' />
           </IconButton>

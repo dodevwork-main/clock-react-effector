@@ -4,40 +4,43 @@ import PlayCircleIcon from '@mui/icons-material/PlayCircle'
 import PauseCircleIcon from '@mui/icons-material/PauseCircle'
 import StopCircleIcon from '@mui/icons-material/StopCircle'
 
-import {
-  TimeClock,
-  timeClockModel,
-  TimeClockStatusEnum,
-} from '~/features/time/clock'
+import { Clock } from '~/shared/ui/Clock'
+import { ClockStatusEnum } from '~/shared/config/constants'
 
-import { oneSecondAdded } from './model'
+import {
+  oneSecondAdded,
+  statusInProgressSet,
+  statusNewSet,
+  statusStoppedSet,
+  useStatus,
+  useTime,
+} from './model'
 
 export function Stopwatch() {
-  const { statusNewSet, statusInProgressSet, statusStoppedSet, useStatus } =
-    timeClockModel
   const status = useStatus()
+  const time = useTime()
 
   return (
     <Stack flex={1} minHeight={0} justifyContent='center' alignItems='center'>
       <Stack justifyContent='center' alignItems='center'>
-        <TimeClock oneSecondHandler={oneSecondAdded} />
+        <Clock status={status} time={time} oneSecondHandler={oneSecondAdded} />
 
         <Stack justifyContent='center' alignItems='center' direction='row'>
-          {(status === TimeClockStatusEnum.InProgress ||
-            status === TimeClockStatusEnum.Stopped) && (
+          {(status === ClockStatusEnum.InProgress ||
+            status === ClockStatusEnum.Stopped) && (
             <IconButton onClick={() => statusNewSet()}>
               <StopCircleIcon fontSize='large' />
             </IconButton>
           )}
 
-          {(status === TimeClockStatusEnum.New ||
-            status === TimeClockStatusEnum.Stopped) && (
+          {(status === ClockStatusEnum.New ||
+            status === ClockStatusEnum.Stopped) && (
             <IconButton onClick={() => statusInProgressSet()}>
               <PlayCircleIcon fontSize='large' />
             </IconButton>
           )}
 
-          {status === TimeClockStatusEnum.InProgress && (
+          {status === ClockStatusEnum.InProgress && (
             <IconButton onClick={() => statusStoppedSet()}>
               <PauseCircleIcon fontSize='large' />
             </IconButton>

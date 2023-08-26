@@ -1,16 +1,18 @@
 import Stack from '@mui/material/Stack'
 
-import { timeClockModel, TimeClockStatusEnum } from '~/features/time/clock'
+import { ClockStatusEnum } from '~/shared/config/constants'
+
+import { useStatus } from '../model'
 
 import { Time } from './Time'
 import { Set } from './Set'
 
 export function Timer() {
-  const status = timeClockModel.useStatus()
+  const status = useStatus()
 
   return (
     <Stack flex={1} minHeight={0} justifyContent='center' alignItems='center'>
-      {status === TimeClockStatusEnum.New ? <Set /> : <Time />}
+      {status === ClockStatusEnum.New ? <Set /> : <Time />}
     </Stack>
   )
 }
