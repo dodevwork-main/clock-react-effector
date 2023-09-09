@@ -1,10 +1,10 @@
 import { PageContainer } from '~/shared/ui/PageContainer'
-import { Alarm } from '~/widgets/alarm'
+import { ClockAlarm } from '~/widgets/clock/alarm'
 
 export default function AlarmPage() {
   return (
     <PageContainer title='Item'>
-      <Alarm />
+      <ClockAlarm />
     </PageContainer>
   )
 }
