@@ -3,7 +3,7 @@ import { ClockTimeZone } from '~/widgets/clock/time-zone'
 
 export default function TimeZonePage() {
   return (
-    <PageContainer title='LocalTime Zone'>
+    <PageContainer title='Time Zone'>
       <ClockTimeZone />
     </PageContainer>
   )
