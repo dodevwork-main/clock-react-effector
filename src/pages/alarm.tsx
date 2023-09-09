@@ -3,7 +3,7 @@ import { ClockAlarm } from '~/widgets/clock/alarm'
 
 export default function AlarmPage() {
   return (
-    <PageContainer title='Item'>
+    <PageContainer title='Alarm'>
       <ClockAlarm />
     </PageContainer>
   )
