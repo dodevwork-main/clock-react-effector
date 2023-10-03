@@ -5,7 +5,7 @@ import { TimeZone } from './types'
 
 const domain = createDomain('entities.time-zone')
 
-export const getTimeZoneListFx = domain.createEffect<void, TimeZone[]>({
+export const getTimeZonesFx = domain.createEffect<void, TimeZone[]>({
   handler() {
     return Intl.supportedValuesOf('timeZone').map((timeZone) => {
       const [continent, city] = timeZone.replaceAll('_', ' ').split('/')

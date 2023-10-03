@@ -12,6 +12,7 @@ type Props = ListChildComponentProps<TimeZone[]>
 
 export function Item({ data, index, style }: Props) {
   const timeZone = data[index]
+
   return (
     <ListItem style={{ ...style, width: '100%' }}>
       <ListItemButton onClick={() => timeZoneSelected(timeZone)}>
@@ -26,11 +27,3 @@ export function Item({ data, index, style }: Props) {
     </ListItem>
   )
 }
-
-//onClick={() => timeZoneSelected(timeZone)}
-// <Stack style={style}>
-//       <Typography>{data[index].id}</Typography>
-//       {/*<Typography>*/}
-//       {/*  {timeZone.continent} - GMT {timeZone.gmt}*/}
-//       {/*</Typography>*/}
-//     </Stack>

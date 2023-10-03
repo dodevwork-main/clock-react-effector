@@ -4,33 +4,31 @@ import { createGate, useUnit } from 'effector-react'
 import { TimeZone, timeZoneModel } from '~/entities/time-zone'
 import { createModal } from '~/shared/lib/factories'
 
-const domain = createDomain('features.time.zone-list')
+const domain = createDomain('features.time.zones')
 export const Gate = createGate({ domain })
 
-/* Full TimeZone List */
-const getTimeZoneListFx = attach({
-  effect: timeZoneModel.getTimeZoneListFx,
+/* All TimeZones */
+const getTimeZonesFx = attach({
+  effect: timeZoneModel.getTimeZonesFx,
 })
-const $timeZoneList = domain
+const $timeZones = domain
   .createStore<TimeZone[]>([])
-  .on(getTimeZoneListFx.doneData, (_, list) => list)
+  .on(getTimeZonesFx.doneData, (_, payload) => payload)
 sample({
   clock: Gate.open,
-  source: $timeZoneList,
+  source: $timeZones,
   filter: (list) => list.length === 0,
-  target: getTimeZoneListFx,
+  target: getTimeZonesFx,
 })
 
 export const timeZoneSelected = domain.createEvent<TimeZone>()
-const $displayedTimeZoneList = domain
-  .createStore<TimeZone[]>([])
-  .reset(Gate.close)
+const $displayedTimeZones = domain.createStore<TimeZone[]>([]).reset(Gate.close)
 
 /* Search */
 export const search = domain.createEvent<string>()
 sample({
   clock: search,
-  source: $timeZoneList,
+  source: $timeZones,
   filter: (list) => list.length > 0,
   fn: (list, searchValues) =>
     list.filter(
@@ -38,11 +36,11 @@ sample({
         timeZone.city.toLowerCase().includes(searchValues.toLowerCase()) ||
         timeZone.continent.toLowerCase().includes(searchValues.toLowerCase()),
     ),
-  target: $displayedTimeZoneList,
+  target: $displayedTimeZones,
 })
 
 /* Modal */
 export const { $modal, useModal, modalOpened } = createModal(domain)
 $modal.reset([Gate.close, timeZoneSelected])
 
-export const useList = () => useUnit($displayedTimeZoneList)
+export const useTimeZones = () => useUnit($displayedTimeZones)

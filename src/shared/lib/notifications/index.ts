@@ -3,7 +3,7 @@ import {
   allSnackbarsClosed,
   snackbarClosed,
   snackbarEnqueued,
-  snackbarEnqueuedList,
+  snackbarsEnqueued,
   snackbarRemoved,
   useNotifications,
 } from './model'
@@ -13,7 +13,7 @@ export const notificationsModel = {
   allSnackbarsClosed,
   snackbarClosed,
   snackbarEnqueued,
-  snackbarEnqueuedList,
+  snackbarsEnqueued,
   snackbarRemoved,
   useNotifications,
 }
