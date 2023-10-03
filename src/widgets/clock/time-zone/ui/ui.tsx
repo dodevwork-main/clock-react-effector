@@ -5,15 +5,15 @@ import { useState } from 'react'
 import dayjs from 'dayjs'
 import { useMount } from 'react-use'
 
-import { TimeZoneList, timeZoneListModel } from '~/features/time/zone-list'
+import { TimeZones, timeZonesModel } from '~/features/time/zones'
 
-import { useTimeZoneList } from '../model'
+import { useTimeZones } from '../model'
 
 import { LocalTime } from './LocalTime'
 import { Item } from './Item'
 
 export function TimeZone() {
-  const timeZoneList = useTimeZoneList()
+  const timeZones = useTimeZones()
 
   const [localDate, setLocalDate] = useState(dayjs().tz())
   useMount(() => {
@@ -27,9 +27,9 @@ export function TimeZone() {
       <Stack flex={1} minHeight={0} justifyContent='center' alignItems='center'>
         <LocalTime date={localDate} />
 
-        {timeZoneList.length > 0 && (
+        {timeZones.length > 0 && (
           <Stack flex={2} spacing={2} width='100%' sx={{ overflowY: 'auto' }}>
-            {timeZoneList.map((timeZone) => (
+            {timeZones.map((timeZone) => (
               <Item
                 key={timeZone.tz}
                 timeZone={timeZone}
@@ -41,12 +41,12 @@ export function TimeZone() {
       </Stack>
 
       <Stack justifyContent='center' alignItems='center' direction='row'>
-        <IconButton onClick={() => timeZoneListModel.modalOpened()}>
+        <IconButton onClick={() => timeZonesModel.modalOpened()}>
           <AddIcon fontSize='large' />
         </IconButton>
       </Stack>
 
-      <TimeZoneList />
+      <TimeZones />
     </Stack>
   )
 }

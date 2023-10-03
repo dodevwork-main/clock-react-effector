@@ -1,19 +1,19 @@
 import { createDomain } from 'effector'
 import { useUnit } from 'effector-react'
 
-import { timeZoneListModel } from '~/features/time/zone-list'
+import { timeZonesModel } from '~/features/time/zones'
 import { TimeZone } from '~/entities/time-zone'
 
 const domain = createDomain('widgets.time-zone')
 
 export const timeZoneRemoved = domain.createEvent<TimeZone>()
-export const $timeZoneList = domain
+export const $timeZones = domain
   .createStore<TimeZone[]>([])
-  .on(timeZoneListModel.timeZoneSelected, (list, timeZone) =>
-    list.every((item) => item.tz !== timeZone.tz) ? [...list, timeZone] : list,
+  .on(timeZonesModel.timeZoneSelected, (state, payload) =>
+    state.every((item) => item.tz !== payload.tz) ? [...state, payload] : state,
   )
-  .on(timeZoneRemoved, (list, timeZone) =>
-    list.filter((item) => item.tz !== timeZone.tz),
+  .on(timeZoneRemoved, (state, payload) =>
+    state.filter((item) => item.tz !== payload.tz),
   )
 
 /*
@@ -21,4 +21,4 @@ export const $timeZoneList = domain
  * Make notification if timeZoneSelected is the same for $timeZone
  * */
 
-export const useTimeZoneList = () => useUnit($timeZoneList)
+export const useTimeZones = () => useUnit($timeZones)

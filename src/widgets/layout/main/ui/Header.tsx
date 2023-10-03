@@ -10,7 +10,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 import { PathEnum } from '~/shared/config/constants'
 
-const list = [
+const nav = [
   { link: PathEnum.Alarm, icon: <AlarmIcon /> },
   { link: PathEnum.TimeZone, icon: <ScheduleIcon /> },
   { link: PathEnum.Timer, icon: <TimerOutlinedIcon /> },
@@ -26,7 +26,7 @@ export function Header() {
       <Container>
         <Stack width='100%' alignItems='center'>
           <Stack direction='row' justifyContent='center' spacing={2}>
-            {list.map((item) => (
+            {nav.map((item) => (
               <IconButton
                 key={item.link}
                 onClick={() => navigate(item.link)}

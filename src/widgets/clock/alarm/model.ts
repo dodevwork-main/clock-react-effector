@@ -15,16 +15,16 @@ export const Gate = createGate({ domain })
 export const alarmSet = domain.createEvent<Alarm>()
 export const alarmSwitched = domain.createEvent<Alarm>()
 export const alarmRemoved = domain.createEvent<Alarm>()
-const $alarmList = domain
+const $alarms = domain
   .createStore<Alarm[]>([])
-  .on(alarmSet, (list, alarm) => {
-    if (list.some((item) => isSameTwoAlarmsFromToday(item, alarm))) {
-      return list
+  .on(alarmSet, (state, payload) => {
+    if (state.some((item) => isSameTwoAlarmsFromToday(item, payload))) {
+      return state
     }
 
-    const newList = [...list, alarm]
+    const newState = [...state, payload]
 
-    return newList.sort((a, b) => {
+    return newState.sort((a, b) => {
       const timeA = getTimeFromToday(a.time)
       const timeB = getTimeFromToday(b.time)
 
@@ -39,12 +39,12 @@ const $alarmList = domain
       return -1
     })
   })
-  .on(alarmRemoved, (list, alarm) =>
-    list.filter((item) => !isSameTwoAlarmsFromToday(item, alarm)),
+  .on(alarmRemoved, (state, payload) =>
+    state.filter((item) => !isSameTwoAlarmsFromToday(item, payload)),
   )
-  .on(alarmSwitched, (list, alarm) =>
-    list.map((item) => {
-      if (isSameTwoAlarmsFromToday(item, alarm)) {
+  .on(alarmSwitched, (state, payload) =>
+    state.map((item) => {
+      if (isSameTwoAlarmsFromToday(item, payload)) {
         item.isOn = !item.isOn
       }
 
@@ -69,4 +69,4 @@ sample({
 export const { $modal, useModal, modalOpened } = createModal(domain)
 $modal.reset([Gate.close, alarmSet])
 
-export const useAlarmList = () => useUnit($alarmList)
+export const useAlarms = () => useUnit($alarms)

@@ -9,7 +9,7 @@ export type EnqueueParams = {
 } & OptionsObject
 
 export const snackbarEnqueued = domain.createEvent<EnqueueParams>()
-export const snackbarEnqueuedList = domain.createEvent<EnqueueParams[]>()
+export const snackbarsEnqueued = domain.createEvent<EnqueueParams[]>()
 export const snackbarClosed = domain.createEvent<SnackbarKey>()
 export const allSnackbarsClosed = domain.createEvent()
 export const snackbarRemoved = domain.createEvent<SnackbarKey>()
@@ -30,7 +30,7 @@ export const $notifications = domain
       dismissed: false,
     },
   ])
-  .on(snackbarEnqueuedList, (state, payload) => [
+  .on(snackbarsEnqueued, (state, payload) => [
     ...state,
     ...payload.map((notification) => ({
       key: notification.key || new Date().getTime() + Math.random(),

@@ -10,19 +10,19 @@ import { useGate } from 'effector-react'
 import { getUnixFromNow } from '~/shared/lib/getUnixFromNow'
 import { getTimeFromToday } from '~/shared/lib/getTimeFromToday'
 
-import { alarmDone, Gate, modalOpened, useAlarmList } from '../model'
+import { alarmDone, Gate, modalOpened, useAlarms } from '../model'
 
 import { Item } from './Item'
 import { Set } from './Set'
 
 export function Alarm() {
   useGate(Gate)
-  const alarmList = useAlarmList()
+  const alarms = useAlarms()
 
   useEffect(() => {
-    const timeoutList: number[] = []
+    const timeouts: number[] = []
 
-    alarmList.forEach((alarm) => {
+    alarms.forEach((alarm) => {
       if (alarm.isOn) {
         let timeFromToday = getTimeFromToday(alarm.time)
 
@@ -35,17 +35,17 @@ export function Alarm() {
         if (unixFromNow > 0) {
           const timeout = setTimeout(() => alarmDone(alarm), unixFromNow * 1000)
 
-          timeoutList.push(timeout)
+          timeouts.push(timeout)
         }
       }
     })
 
-    return () => timeoutList.forEach((timeout) => clearTimeout(timeout))
-  }, [alarmList])
+    return () => timeouts.forEach((timeout) => clearTimeout(timeout))
+  }, [alarms])
 
   return (
     <Stack flex={1} minHeight={0}>
-      {alarmList.length > 0 ? (
+      {alarms.length > 0 ? (
         <Stack
           flex={1}
           minHeight={0}
@@ -53,7 +53,7 @@ export function Alarm() {
           mt={2}
           sx={{ overflowY: 'auto' }}
         >
-          {alarmList.map((alarm) => (
+          {alarms.map((alarm) => (
             <Item key={alarm.time.unix()} alarm={alarm} />
           ))}
         </Stack>

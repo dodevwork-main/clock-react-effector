@@ -5,7 +5,7 @@ import { FixedSizeList } from 'react-window'
 import { styled } from '@mui/material'
 import Dialog from '@mui/material/Dialog'
 
-import { Gate, useList, useModal } from '../model'
+import { Gate, useModal, useTimeZones } from '../model'
 
 import { Search } from './Search'
 import { Item } from './Item'
@@ -14,11 +14,11 @@ const StyledDialog = styled(Dialog)({
   '& .MuiDialog-paper': { height: 'calc(100% - 64px)' },
 })
 
-export function ZoneList() {
+export function Zones() {
   useGate(Gate)
 
   const [isOpen, closeModal] = useModal()
-  const list = useList()
+  const timeZones = useTimeZones()
 
   return (
     <StyledDialog
@@ -36,9 +36,9 @@ export function ZoneList() {
               <FixedSizeList
                 height={height}
                 width={width}
-                itemCount={list.length}
+                itemCount={timeZones.length}
                 itemSize={72}
-                itemData={list}
+                itemData={timeZones}
               >
                 {Item}
               </FixedSizeList>

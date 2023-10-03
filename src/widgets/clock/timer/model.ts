@@ -21,7 +21,7 @@ export const {
 export const timeSet = domain.createEvent<Dayjs>()
 const $startTime = domain
   .createStore<Dayjs | null>(null)
-  .on(timeSet, (_, time) => time)
+  .on(timeSet, (_, payload) => payload)
   .reset(statusNewSet)
 
 $time.on(timeSet, (_, date) => date)

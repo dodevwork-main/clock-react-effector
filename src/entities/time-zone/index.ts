@@ -1,6 +1,6 @@
-import { getTimeZoneListFx } from './model'
+import { getTimeZonesFx } from './model'
 
 export const timeZoneModel = {
-  getTimeZoneListFx,
+  getTimeZonesFx,
 }
 export type { TimeZone } from './types'
