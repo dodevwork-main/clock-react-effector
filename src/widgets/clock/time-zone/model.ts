@@ -4,7 +4,7 @@ import { useUnit } from 'effector-react'
 import { timeZonesModel } from '~/features/time/zones'
 import { TimeZone } from '~/entities/time-zone'
 
-const domain = createDomain('widgets.time-zone')
+export const domain = createDomain('widgets.clock.time-zone')
 
 export const timeZoneRemoved = domain.createEvent<TimeZone>()
 export const $timeZones = domain

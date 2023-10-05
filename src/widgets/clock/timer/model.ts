@@ -6,7 +6,7 @@ import { TIME_FORMAT_CLOCK } from '~/shared/config/constants'
 import { zeroTime } from '~/shared/lib/zeroTime'
 import { createClock } from '~/shared/lib/factories'
 
-const domain = createDomain('widgets.timer')
+export const domain = createDomain('widgets.clock.timer')
 
 export const {
   $time,

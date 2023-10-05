@@ -9,7 +9,7 @@ import { TIME_FORMAT_MAIN } from '~/shared/config/constants'
 
 const { isSameTwoAlarmsFromToday } = alarmModel
 
-const domain = createDomain('widgets.alarm')
+export const domain = createDomain('widgets.clock.alarm')
 export const Gate = createGate({ domain })
 
 export const alarmSet = domain.createEvent<Alarm>()

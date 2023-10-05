@@ -33,7 +33,10 @@ export function Alarm() {
         const unixFromNow = getUnixFromNow(timeFromToday)
 
         if (unixFromNow > 0) {
-          const timeout = setTimeout(() => alarmDone(alarm), unixFromNow * 1000)
+          const timeout = window.setTimeout(
+            () => alarmDone(alarm),
+            unixFromNow * 1000,
+          )
 
           timeouts.push(timeout)
         }

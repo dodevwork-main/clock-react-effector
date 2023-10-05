@@ -2,11 +2,7 @@
   "compilerOptions": {
     "target": "ESNext",
     "useDefineForClassFields": true,
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext"
-    ],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "module": "ESNext",
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -25,35 +21,16 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "~/app": [
-        "src/app"
-      ],
-      "~/processes/*": [
-        "src/processes/*"
-      ],
-      "~/pages": [
-        "src/pages"
-      ],
-      "~/widgets/*": [
-        "src/widgets/*"
-      ],
-      "~/features/*": [
-        "src/features/*"
-      ],
-      "~/entities/*": [
-        "src/entities/*"
-      ],
-      "~/shared/*": [
-        "src/shared/*"
-      ]
+      "~/app": ["src/app"],
+      "~/processes/*": ["src/processes/*"],
+      "~/pages": ["src/pages"],
+      "~/widgets/*": ["src/widgets/*"],
+      "~/features/*": ["src/features/*"],
+      "~/entities/*": ["src/entities/*"],
+      "~/shared/*": ["src/shared/*"],
+      "@tests/*": ["tests/*"]
     }
   },
-  "include": [
-    "src"
-  ],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    }
-  ]
+  "include": ["src", "vitest"],
+  "references": [{"path": "./tsconfig.node.json"}]
 }
