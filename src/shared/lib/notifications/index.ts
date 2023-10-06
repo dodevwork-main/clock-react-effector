@@ -1,20 +1,16 @@
 import {
   $notifications,
-  allSnackbarsClosed,
-  snackbarClosed,
   snackbarEnqueued,
-  snackbarsEnqueued,
   snackbarRemoved,
   useNotifications,
+  useNotificationsEvent,
 } from './model'
 
 export const notificationsModel = {
   $notifications,
-  allSnackbarsClosed,
-  snackbarClosed,
   snackbarEnqueued,
-  snackbarsEnqueued,
   snackbarRemoved,
   useNotifications,
+  useNotificationsEvent,
 }
 export { Provider as NotificationsProvider } from './ui'
