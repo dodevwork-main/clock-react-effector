@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async'
 import Container from '@mui/material/Container'
 import { styled } from '@mui/material'
 
-const CustomContainer = styled(Container)({
+const StyledContainer = styled(Container)({
   minHeight: 0,
   flex: 1,
   display: 'flex',
@@ -24,7 +24,7 @@ export function PageContainer({ children, title, isContainer = true }: Props) {
       </Helmet>
 
       <Stack flex={1} minHeight={0} component='main'>
-        {isContainer ? <CustomContainer>{children}</CustomContainer> : children}
+        {isContainer ? <StyledContainer>{children}</StyledContainer> : children}
       </Stack>
     </>
   )

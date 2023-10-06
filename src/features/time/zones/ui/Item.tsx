@@ -6,12 +6,14 @@ import { ListChildComponentProps } from 'react-window'
 
 import { TimeZone } from '~/entities/time-zone'
 
-import { timeZoneSelected } from '../model'
+import { useTimeZoneSelected } from '../model'
 
 type Props = ListChildComponentProps<TimeZone[]>
 
 export function Item({ data, index, style }: Props) {
   const timeZone = data[index]
+
+  const timeZoneSelected = useTimeZoneSelected()
 
   return (
     <ListItem style={{ ...style, width: '100%' }}>

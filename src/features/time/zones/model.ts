@@ -25,7 +25,7 @@ export const timeZoneSelected = domain.createEvent<TimeZone>()
 const $displayedTimeZones = domain.createStore<TimeZone[]>([]).reset(Gate.close)
 
 /* Search */
-export const search = domain.createEvent<string>()
+const search = domain.createEvent<string>()
 sample({
   clock: search,
   source: $timeZones,
@@ -44,3 +44,5 @@ export const { $modal, useModal, modalOpened } = createModal(domain)
 $modal.reset([Gate.close, timeZoneSelected])
 
 export const useTimeZones = () => useUnit($displayedTimeZones)
+export const useSearch = () => useUnit(search)
+export const useTimeZoneSelected = () => useUnit(timeZoneSelected)

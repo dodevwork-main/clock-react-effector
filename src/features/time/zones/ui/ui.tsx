@@ -31,19 +31,21 @@ export function Zones() {
         <Search />
 
         <Stack height='100%'>
-          <AutoSizer>
-            {({ height, width }) => (
-              <FixedSizeList
-                height={height}
-                width={width}
-                itemCount={timeZones.length}
-                itemSize={72}
-                itemData={timeZones}
-              >
-                {Item}
-              </FixedSizeList>
-            )}
-          </AutoSizer>
+          {timeZones.length > 0 && (
+            <AutoSizer>
+              {({ height, width }) => (
+                <FixedSizeList
+                  height={height}
+                  width={width}
+                  itemCount={timeZones.length}
+                  itemSize={72}
+                  itemData={timeZones}
+                >
+                  {Item}
+                </FixedSizeList>
+              )}
+            </AutoSizer>
+          )}
         </Stack>
       </Stack>
     </StyledDialog>
