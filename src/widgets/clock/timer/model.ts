@@ -1,5 +1,6 @@
 import { createDomain, sample } from 'effector'
 import { Dayjs } from 'dayjs'
+import { useUnit } from 'effector-react'
 
 import { notificationsModel } from '~/shared/lib/notifications'
 import { TIME_FORMAT_CLOCK } from '~/shared/config/constants'
@@ -10,16 +11,18 @@ export const domain = createDomain('widgets.clock.timer')
 
 export const {
   $time,
+  $status,
   statusNewSet,
   statusInProgressSet,
   statusStoppedSet,
   useStatus,
   useTime,
+  useStatusEvent,
 } = createClock(domain)
 
 /* Set Time */
 export const timeSet = domain.createEvent<Dayjs>()
-const $startTime = domain
+export const $startTime = domain
   .createStore<Dayjs | null>(null)
   .on(timeSet, (_, payload) => payload)
   .reset(statusNewSet)
@@ -49,3 +52,6 @@ sample({
   }),
   target: [notificationsModel.snackbarEnqueued, statusNewSet],
 })
+
+export const useOneSecondSubtracted = () => useUnit(oneSecondSubtracted)
+export const useTimeSet = () => useUnit(timeSet)

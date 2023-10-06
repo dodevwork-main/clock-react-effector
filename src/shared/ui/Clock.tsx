@@ -1,5 +1,4 @@
 import { Dayjs } from 'dayjs'
-import { Event } from 'effector'
 import { useEffect } from 'react'
 import Typography from '@mui/material/Typography'
 
@@ -8,7 +7,7 @@ import { ClockStatusEnum, TIME_FORMAT_CLOCK } from '~/shared/config/constants'
 type Props = {
   status: ClockStatusEnum
   time: Dayjs
-  oneSecondHandler: Event<void>
+  oneSecondHandler: () => void
 }
 
 export function Clock({ status, time, oneSecondHandler }: Props) {
