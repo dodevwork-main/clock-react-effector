@@ -2,12 +2,15 @@ import { afterAll, beforeEach, describe, expect, vi } from 'vitest'
 import { allSettled, fork, hydrate } from 'effector'
 import { RenderResult, within } from '@testing-library/react'
 import { act } from 'react-dom/test-utils'
+import dayjs from 'dayjs'
 
 import { renderWithEffector } from '@tests/renderers'
 import { TimeZone as TimeZoneType } from '~/entities/time-zone'
 import { click } from '@tests/commands'
 import { timeZonesModel } from '~/features/time/zones'
 import { notificationsModel } from '~/shared/lib/notifications'
+import { delay } from '~/shared/lib/delay'
+import { TIME_FORMAT_MAIN } from '~/shared/config/constants'
 
 import { $timeZones, domain } from '../model'
 import { TimeZone } from '../ui'
@@ -19,7 +22,12 @@ const timeZonesFixture: TimeZoneType[] = [
     tz: 'Africa/Abidjan',
     gmt: '+00:00',
   },
-  { city: 'Accra', continent: 'Africa', tz: 'Africa/Accra', gmt: '+00:00' },
+  {
+    city: 'Accra',
+    continent: 'Africa',
+    tz: 'Africa/Accra',
+    gmt: '+00:00',
+  },
   {
     city: 'Addis Ababa',
     continent: 'Africa',
@@ -48,6 +56,20 @@ describe('TimeZone component test', () => {
         values: [[$timeZones, []]],
       })
     })
+  })
+
+  it('Should increase the time by 2 seconds', async () => {
+    const localTime = dayjs().tz()
+
+    await act(async () => {
+      await delay(2000)
+    })
+
+    const localTimeHeader = renderResult.getByText(
+      localTime.add(2, 'seconds').format(TIME_FORMAT_MAIN),
+    )
+
+    expect(localTimeHeader).toBeVisible()
   })
 
   it('Should add selectedTimeZone to store', async () => {
@@ -103,7 +125,7 @@ describe('TimeZone component test', () => {
     expect(mockModalOpened).toHaveBeenCalledOnce()
   })
 
-  it('Should remove TimeZone, if select TimeZone and click DeleteIcon button', async () => {
+  it('Should delete first TimeZone, if select TimeZone and click DeleteIcon button', async () => {
     act(() => {
       hydrate(scope, { values: [[$timeZones, timeZonesFixture]] })
     })

@@ -12,33 +12,10 @@ const { isSameTwoAlarmsFromToday } = alarmModel
 export const domain = createDomain('widgets.clock.alarm')
 export const Gate = createGate({ domain })
 
-export const alarmSet = domain.createEvent<Alarm>()
-export const alarmSwitched = domain.createEvent<Alarm>()
-export const alarmRemoved = domain.createEvent<Alarm>()
-const $alarms = domain
+const alarmSwitched = domain.createEvent<Alarm>()
+const alarmRemoved = domain.createEvent<Alarm>()
+export const $alarms = domain
   .createStore<Alarm[]>([])
-  .on(alarmSet, (state, payload) => {
-    if (state.some((item) => isSameTwoAlarmsFromToday(item, payload))) {
-      return state
-    }
-
-    const newState = [...state, payload]
-
-    return newState.sort((a, b) => {
-      const timeA = getTimeFromToday(a.time)
-      const timeB = getTimeFromToday(b.time)
-
-      if (timeA.isSame(timeB)) {
-        return 0
-      }
-
-      if (timeA.isAfter(timeB)) {
-        return 1
-      }
-
-      return -1
-    })
-  })
   .on(alarmRemoved, (state, payload) =>
     state.filter((item) => !isSameTwoAlarmsFromToday(item, payload)),
   )
@@ -52,7 +29,43 @@ const $alarms = domain
     }),
   )
 
-export const alarmDone = domain.createEvent<Alarm>()
+/* Set */
+const alarmSet = domain.createEvent<Alarm>()
+sample({
+  clock: alarmSet,
+  source: $alarms,
+  filter: (list, alarm) =>
+    list.some((item) => isSameTwoAlarmsFromToday(item, alarm)),
+  fn: () => ({
+    message: 'Alarm already on the list',
+    variant: 'warning' as const,
+  }),
+  target: notificationsModel.snackbarEnqueued,
+})
+sample({
+  clock: alarmSet,
+  source: $alarms,
+  filter: (list, alarm) =>
+    list.every((item) => !isSameTwoAlarmsFromToday(item, alarm)),
+  fn: (list, alarm) => {
+    const newState = [...list, alarm]
+
+    return newState.sort((a, b) => {
+      const timeA = getTimeFromToday(a.time)
+      const timeB = getTimeFromToday(b.time)
+
+      if (timeA.isAfter(timeB)) {
+        return 1
+      }
+
+      return -1
+    })
+  },
+  target: $alarms,
+})
+
+/* Done */
+const alarmDone = domain.createEvent<Alarm>()
 sample({
   clock: alarmDone,
   fn: (alarm) => ({
@@ -66,7 +79,15 @@ sample({
   target: alarmSwitched,
 })
 
+/* Modal */
 export const { $modal, useModal, modalOpened } = createModal(domain)
 $modal.reset([Gate.close, alarmSet])
 
 export const useAlarms = () => useUnit($alarms)
+export const useAlarmEvent = () =>
+  useUnit({
+    alarmSet,
+    alarmSwitched,
+    alarmRemoved,
+    alarmDone,
+  })
