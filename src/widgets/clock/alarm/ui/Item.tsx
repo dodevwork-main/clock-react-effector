@@ -8,15 +8,17 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import { Alarm } from '~/entities/alarm'
 import { TIME_FORMAT_MAIN } from '~/shared/config/constants'
 
-import { alarmRemoved, alarmSwitched } from '../model'
+import { useAlarmEvent } from '../model'
 
 type Props = {
   alarm: Alarm
 }
 
 export function Item({ alarm }: Props) {
+  const { alarmRemoved, alarmSwitched } = useAlarmEvent()
+
   return (
-    <Card>
+    <Card sx={{ width: '100%' }}>
       <Stack
         direction='row'
         justifyContent='space-between'

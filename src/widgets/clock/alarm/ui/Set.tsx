@@ -6,11 +6,12 @@ import { SyntheticEvent, useState } from 'react'
 import dayjs, { Dayjs } from 'dayjs'
 import { useUpdateEffect } from 'react-use'
 
-import { alarmSet, useModal } from '../model'
+import { useAlarmEvent, useModal } from '../model'
 
 export function Set() {
   const [isOpen, closeModal] = useModal()
   const [time, setTime] = useState<Dayjs | null>(null)
+  const { alarmSet } = useAlarmEvent()
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault()
