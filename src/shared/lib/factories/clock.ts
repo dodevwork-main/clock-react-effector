@@ -21,6 +21,8 @@ export function createClock(domain: Domain) {
 
   const useStatus = () => useUnit($status)
   const useTime = () => useUnit($time)
+  const useStatusEvent = () =>
+    useUnit([statusNewSet, statusInProgressSet, statusStoppedSet])
 
   return {
     $status,
@@ -30,5 +32,6 @@ export function createClock(domain: Domain) {
     statusStoppedSet,
     useStatus,
     useTime,
+    useStatusEvent,
   }
 }

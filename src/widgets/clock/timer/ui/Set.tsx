@@ -6,10 +6,11 @@ import Button from '@mui/material/Button'
 
 import { zeroTime } from '~/shared/lib/zeroTime'
 
-import { timeSet } from '../model'
+import { useTimeSet } from '../model'
 
 export function Set() {
   const [date, setDate] = useState<Dayjs | null>(zeroTime)
+  const timeSet = useTimeSet()
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault()

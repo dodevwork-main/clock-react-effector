@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">94.11% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>48/51</span>
+                <span class='fraction'>57/57</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">94.11% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>48/51</span>
+                <span class='fraction'>57/57</span>
             </div>
         
             
@@ -114,7 +114,13 @@
 <a name='L49'></a><a href='#L49'>49</a>
 <a name='L50'></a><a href='#L50'>50</a>
 <a name='L51'></a><a href='#L51'>51</a>
-<a name='L52'></a><a href='#L52'>52</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -160,13 +166,20 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { createDomain, sample } from 'effector'
 import { Dayjs } from 'dayjs'
+import { useUnit } from 'effector-react'
 &nbsp;
 import { notificationsModel } from '~/shared/lib/notifications'
 import { TIME_FORMAT_CLOCK } from '~/shared/config/constants'
@@ -177,16 +190,18 @@ export const domain = createDomain('widgets.clock.timer')
 &nbsp;
 export const {
   $time,
+  $status,
   statusNewSet,
   statusInProgressSet,
   statusStoppedSet,
   useStatus,
   useTime,
+  useStatusEvent,
 } = createClock(domain)
 &nbsp;
 /* Set Time */
 export const timeSet = domain.createEvent&lt;Dayjs&gt;()
-const $startTime = domain
+export const $startTime = domain
   .createStore&lt;Dayjs | null&gt;(null)
   .on(timeSet, (_, payload) =&gt; payload)
   .reset(statusNewSet)
@@ -202,20 +217,23 @@ export const oneSecondSubtracted = domain.createEvent()
 sample({
   clock: oneSecondSubtracted,
   source: $time,
-  filter: <span class="fstat-no" title="function not covered" >(time) =&gt; time.isAfter(zeroTime),</span>
-  fn: <span class="fstat-no" title="function not covered" >(time) =&gt; time.subtract(1, 'seconds'),</span>
+  filter: (time) =&gt; time.isAfter(zeroTime),
+  fn: (time) =&gt; time.subtract(1, 'seconds'),
   target: $time,
 })
 sample({
   clock: oneSecondSubtracted,
   source: { time: $time, start: $startTime },
-  filter: <span class="fstat-no" title="function not covered" >({ time, start }) =&gt; time.isSame(zeroTime) &amp;&amp; start !== null,</span>
-  fn: <span class="fstat-no" title="function not covered" >({ start }) =&gt; ({</span>
-<span class="cstat-no" title="statement not covered" >    message: `Timer - ${start?.format(TIME_FORMAT_CLOCK)}`,</span>
-<span class="cstat-no" title="statement not covered" >    variant: 'info' as const,</span>
-<span class="cstat-no" title="statement not covered" >  }),</span>
+  filter: ({ time, start }) =&gt; time.isSame(zeroTime) &amp;&amp; start !== null,
+  fn: ({ start }) =&gt; ({
+    message: `Timer - ${start?.format(TIME_FORMAT_CLOCK)}`,
+    variant: 'info' as const,
+  }),
   target: [notificationsModel.snackbarEnqueued, statusNewSet],
 })
+&nbsp;
+export const useOneSecondSubtracted = () =&gt; useUnit(oneSecondSubtracted)
+export const useTimeSet = () =&gt; useUnit(timeSet)
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -223,7 +241,7 @@ sample({
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-10-05T14:38:09.665Z
+                at 2023-10-06T09:07:40.094Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

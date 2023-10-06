@@ -8,17 +8,17 @@ import { Clock } from '~/shared/ui/Clock'
 import { ClockStatusEnum } from '~/shared/config/constants'
 
 import {
-  oneSecondSubtracted,
-  statusInProgressSet,
-  statusNewSet,
-  statusStoppedSet,
+  useOneSecondSubtracted,
   useStatus,
+  useStatusEvent,
   useTime,
 } from '../model'
 
 export function Time() {
   const status = useStatus()
   const time = useTime()
+  const [statusNewSet, statusInProgressSet, statusStoppedSet] = useStatusEvent()
+  const oneSecondSubtracted = useOneSecondSubtracted()
 
   return (
     <Stack justifyContent='center' alignItems='center'>

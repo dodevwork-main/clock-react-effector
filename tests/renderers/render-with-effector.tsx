@@ -10,6 +10,7 @@ import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
+import { SnackbarProvider } from "notistack";
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -29,7 +30,9 @@ export function renderWithEffector(
     wrapper: (props) => (
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <BrowserRouter>
-          <Provider value={options.scope}>{props.children}</Provider>
+          <SnackbarProvider>
+            <Provider value={options.scope}>{props.children}</Provider>
+          </SnackbarProvider>
         </BrowserRouter>
       </LocalizationProvider>
     ),
