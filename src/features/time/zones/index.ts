@@ -1,4 +1,4 @@
-import { modalOpened, timeZoneSelected } from './model'
+import { modalOpened, timeZoneSelected, useModal } from './model'
 
-export const timeZonesModel = { timeZoneSelected, modalOpened }
+export const timeZonesModel = { modalOpened, timeZoneSelected, useModal }
 export { Zones as TimeZones } from './ui'

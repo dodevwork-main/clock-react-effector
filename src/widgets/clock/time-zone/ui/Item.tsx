@@ -9,7 +9,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import { TimeZone } from '~/entities/time-zone'
 import { DATE_FORMAT, TIME_FORMAT_MAIN } from '~/shared/config/constants'
 
-import { timeZoneRemoved } from '../model'
+import { useTimeZoneRemoved } from '../model'
 
 type Props = {
   timeZone: TimeZone
@@ -20,8 +20,10 @@ export function Item({ timeZone, localDate }: Props) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const date = useMemo(() => dayjs().tz(timeZone.tz), [timeZone, localDate])
 
+  const timeZoneRemoved = useTimeZoneRemoved()
+
   return (
-    <Card>
+    <Card sx={{ width: '100%' }}>
       <Stack
         direction='row'
         justifyContent='space-between'

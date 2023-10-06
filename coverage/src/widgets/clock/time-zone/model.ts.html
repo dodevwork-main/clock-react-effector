@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">91.66% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>22/24</span>
+                <span class='fraction'>36/36</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>10/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">91.66% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>22/24</span>
+                <span class='fraction'>36/36</span>
             </div>
         
             
@@ -87,7 +87,19 @@
 <a name='L22'></a><a href='#L22'>22</a>
 <a name='L23'></a><a href='#L23'>23</a>
 <a name='L24'></a><a href='#L24'>24</a>
-<a name='L25'></a><a href='#L25'>25</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -99,10 +111,6 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -111,30 +119,58 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { createDomain } from 'effector'
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { createDomain, sample } from 'effector'
 import { useUnit } from 'effector-react'
 &nbsp;
 import { timeZonesModel } from '~/features/time/zones'
 import { TimeZone } from '~/entities/time-zone'
+import { notificationsModel } from '~/shared/lib/notifications'
 &nbsp;
 export const domain = createDomain('widgets.clock.time-zone')
 &nbsp;
 export const timeZoneRemoved = domain.createEvent&lt;TimeZone&gt;()
 export const $timeZones = domain
   .createStore&lt;TimeZone[]&gt;([])
-  .on(timeZonesModel.timeZoneSelected, (state, payload) =&gt;
-<span class="cstat-no" title="statement not covered" >    state.every((item) =&gt; item.tz !== payload.tz) ? [...state, payload] : state,</span>
-  )
   .on(timeZoneRemoved, (state, payload) =&gt;
-<span class="cstat-no" title="statement not covered" >    state.filter((item) =&gt; item.tz !== payload.tz),</span>
+    state.filter((item) =&gt; item.tz !== payload.tz),
   )
 &nbsp;
-/*
- * TODO [@dodevwork 31.07.23]:
- * Make notification if timeZoneSelected is the same for $timeZone
- * */
+sample({
+  clock: timeZonesModel.timeZoneSelected,
+  source: $timeZones,
+  filter: (list, timeZone) =&gt; list.some((item) =&gt; item.tz === timeZone.tz),
+  fn: () =&gt; ({
+    message: 'TimeZone already have in list',
+    variant: 'warning' as const,
+  }),
+  target: notificationsModel.snackbarEnqueued,
+})
+sample({
+  clock: timeZonesModel.timeZoneSelected,
+  source: $timeZones,
+  filter: (list, timeZone) =&gt; list.every((item) =&gt; item.tz !== timeZone.tz),
+  fn: (list, timeZone) =&gt; [...list, timeZone],
+  target: $timeZones,
+})
 &nbsp;
 export const useTimeZones = () =&gt; useUnit($timeZones)
+export const useTimeZoneRemoved = () =&gt; useUnit(timeZoneRemoved)
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -142,7 +178,7 @@ export const useTimeZones = () =&gt; useUnit($timeZones)
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-10-06T11:20:45.687Z
+                at 2023-10-06T18:26:12.162Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

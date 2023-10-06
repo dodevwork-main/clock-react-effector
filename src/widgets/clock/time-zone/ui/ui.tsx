@@ -4,6 +4,9 @@ import AddIcon from '@mui/icons-material/Add'
 import { useState } from 'react'
 import dayjs from 'dayjs'
 import { useMount } from 'react-use'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import { styled } from '@mui/material'
 
 import { TimeZones, timeZonesModel } from '~/features/time/zones'
 
@@ -12,8 +15,15 @@ import { useTimeZones } from '../model'
 import { LocalTime } from './LocalTime'
 import { Item } from './Item'
 
+const StyledList = styled(List)({
+  flex: 2,
+  width: '100%',
+  overflowY: 'auto',
+})
+
 export function TimeZone() {
   const timeZones = useTimeZones()
+  const [, , openModal] = timeZonesModel.useModal()
 
   const [localDate, setLocalDate] = useState(dayjs().tz())
   useMount(() => {
@@ -28,20 +38,18 @@ export function TimeZone() {
         <LocalTime date={localDate} />
 
         {timeZones.length > 0 && (
-          <Stack flex={2} spacing={2} width='100%' sx={{ overflowY: 'auto' }}>
+          <StyledList>
             {timeZones.map((timeZone) => (
-              <Item
-                key={timeZone.tz}
-                timeZone={timeZone}
-                localDate={localDate}
-              />
+              <ListItem key={timeZone.tz}>
+                <Item timeZone={timeZone} localDate={localDate} />
+              </ListItem>
             ))}
-          </Stack>
+          </StyledList>
         )}
       </Stack>
 
       <Stack justifyContent='center' alignItems='center' direction='row'>
-        <IconButton onClick={() => timeZonesModel.modalOpened()}>
+        <IconButton onClick={() => openModal()}>
           <AddIcon fontSize='large' />
         </IconButton>
       </Stack>
