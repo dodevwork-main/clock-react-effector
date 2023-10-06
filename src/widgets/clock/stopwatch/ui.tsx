@@ -7,18 +7,13 @@ import StopCircleIcon from '@mui/icons-material/StopCircle'
 import { Clock } from '~/shared/ui/Clock'
 import { ClockStatusEnum } from '~/shared/config/constants'
 
-import {
-  oneSecondAdded,
-  statusInProgressSet,
-  statusNewSet,
-  statusStoppedSet,
-  useStatus,
-  useTime,
-} from './model'
+import { useOneSecondAdded, useStatus, useStatusEvent, useTime } from './model'
 
 export function Stopwatch() {
   const status = useStatus()
   const time = useTime()
+  const [statusNewSet, statusInProgressSet, statusStoppedSet] = useStatusEvent()
+  const oneSecondAdded = useOneSecondAdded()
 
   return (
     <Stack flex={1} minHeight={0} justifyContent='center' alignItems='center'>

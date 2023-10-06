@@ -2,7 +2,7 @@ import { SnackbarKey, useSnackbar } from 'notistack'
 import { ReactNode } from 'react'
 import { useUpdateEffect } from 'react-use'
 
-import { snackbarRemoved, useNotifications } from './model'
+import { useNotifications, useNotificationsEvent } from './model'
 
 let displayed: SnackbarKey[] = []
 
@@ -10,6 +10,8 @@ type Props = { children: ReactNode }
 
 export function Provider({ children }: Props) {
   const notifications = useNotifications()
+  const { snackbarRemoved } = useNotificationsEvent()
+
   const { enqueueSnackbar, closeSnackbar } = useSnackbar()
 
   const storeDisplayed = (key: SnackbarKey) => {
