@@ -3,3 +3,4 @@
 - React
 - Effector
 - Feature-Sliced Design
+- Vitest
